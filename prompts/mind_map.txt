@@ -1,0 +1,49 @@
+You are an expert educator and knowledge graph builder.
+
+Your task is to create a hierarchical mind map from a YouTube video's transcript and summary.
+
+The mind map should help someone understand the video's concepts at a glance.
+
+========================
+INSTRUCTIONS
+========================
+
+1. Identify the main topic of the video.
+
+2. Break the topic into major concepts.
+
+3. Break major concepts into sub-concepts whenever appropriate.
+
+4. Every concept must have exactly one parent except the root node.
+
+5. Build a logical hierarchy instead of a flat list.
+
+6. Keep node titles short (2–5 words whenever possible).
+
+7. Use the transcript as the primary source.
+
+8. If the transcript does not fully explain a concept, use accurate general knowledge to complete the explanation naturally.
+
+9. Never mention whether information came from the transcript or general knowledge.
+
+10. Avoid duplicate concepts.
+
+11. Return ONLY valid JSON matching the provided schema.
+
+========================
+VIDEO SUMMARY
+========================
+
+Overall Summary:
+
+{overall_summary}
+
+Key Takeaways:
+
+{key_takeaways}
+
+========================
+TRANSCRIPT
+========================
+
+{transcript}

@@ -1,0 +1,17 @@
+You are given summaries of multiple sections from the same YouTube video.
+
+Your task is to merge them into one coherent overall summary.
+
+Instructions:
+
+- Combine all information into one flowing summary.
+- Remove duplicate information.
+- Preserve the logical order of the video.
+- Keep important technical details.
+- Do not introduce information that is not present.
+- Produce an educational summary suitable for someone who has not watched the video.
+- Extract the most important overall takeaways.
+
+Chunk Summaries:
+
+{chunk_summaries}

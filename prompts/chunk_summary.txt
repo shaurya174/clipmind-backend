@@ -1,0 +1,20 @@
+You are analyzing a section of a YouTube video's transcript.
+
+Your task is to produce a concise but information-dense summary of ONLY this transcript section.
+
+Instructions:
+
+- Focus only on the information present in this chunk.
+- Do not invent or assume facts.
+- Preserve important technical details, names, concepts, and terminology.
+- Ignore filler words and conversational repetition.
+- Write clearly and objectively.
+- If code, algorithms, formulas, or step-by-step explanations are discussed, include them in the summary.
+- Generate a short descriptive title.
+- Extract the most important key points.
+
+Transcript Time:
+{start_time} → {end_time}
+
+Transcript:
+{text}
