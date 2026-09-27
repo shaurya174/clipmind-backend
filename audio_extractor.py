@@ -51,25 +51,40 @@ def extract_audio(video_id: str, output_dir: str = ".") -> dict:
 
     output_template = os.path.join(output_dir, base_name)
 
-    cookie_file = None
+    temp_cookie_file = None
 
     try:
-        # Read YouTube cookies from environment variable.
-        # This is primarily used on Azure.
-        youtube_cookies = os.getenv("YOUTUBE_COOKIES")
+        # cookies.txt is in the same project root directory as this file.
+        cookies_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "cookies.txt",
+        )
 
-        if youtube_cookies:
-            cookie_file = tempfile.NamedTemporaryFile(
-                mode="w",
-                suffix=".txt",
-                delete=False,
-                encoding="utf-8",
-            )
+        if os.path.exists(cookies_path):
+            cookie_file = cookies_path
+            print("YouTube cookies.txt found.")
 
-            cookie_file.write(youtube_cookies)
-            cookie_file.close()
+        else:
+            # Fallback to YOUTUBE_COOKIES environment variable.
+            youtube_cookies = os.getenv("YOUTUBE_COOKIES")
 
-            print("YouTube cookies loaded from environment.")
+            if youtube_cookies:
+                temp_cookie_file = tempfile.NamedTemporaryFile(
+                    mode="w",
+                    suffix=".txt",
+                    delete=False,
+                    encoding="utf-8",
+                )
+
+                temp_cookie_file.write(youtube_cookies)
+                temp_cookie_file.close()
+
+                cookie_file = temp_cookie_file.name
+                print("YouTube cookies loaded from environment.")
+
+            else:
+                cookie_file = None
+                print("No YouTube cookies found.")
 
         ydl_opts = {
             "format": "bestaudio/best",
@@ -78,7 +93,7 @@ def extract_audio(video_id: str, output_dir: str = ".") -> dict:
             "no_warnings": True,
 
             # Use cookies when available.
-            **({"cookiefile": cookie_file.name} if cookie_file else {}),
+            **({"cookiefile": cookie_file} if cookie_file else {}),
 
             # Improve compatibility with YouTube extraction.
             "extractor_args": {
@@ -121,9 +136,13 @@ def extract_audio(video_id: str, output_dir: str = ".") -> dict:
             )
 
     finally:
-        # Always remove the temporary cookie file.
-        if cookie_file and os.path.exists(cookie_file.name):
-            os.remove(cookie_file.name)
+        # Only remove the temporary file created from YOUTUBE_COOKIES.
+        # The project's cookies.txt is NEVER deleted.
+        if (
+            temp_cookie_file
+            and os.path.exists(temp_cookie_file.name)
+        ):
+            os.remove(temp_cookie_file.name)
 
 
 def delete_audio(audio_path: str):
