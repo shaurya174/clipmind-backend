@@ -1,5 +1,5 @@
 AI_PROVIDER = "groq"
-AI_MODEL = "llama-3.3-70b-versatile"
+AI_MODEL = "openai/gpt-oss-120b"
 
 MAX_CHUNK_WORDS = 1200
 TEMPERATURE = 0.3
